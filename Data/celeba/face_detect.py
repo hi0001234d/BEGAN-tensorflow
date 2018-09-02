@@ -6,10 +6,16 @@ import os
 cascPath = 'haarcascade_frontalface_default.xml'
 faceCascade = cv2.CascadeClassifier(cascPath)
 
+# absolute path, without which python3 seems to have some issue or atleast its for my oSX enironment 
+ABS_PAT = os.path.dirname(os.path.realpath(__file__))
+
 # Read the image
-for fn in sorted(os.listdir('raw')):
+for fn in sorted(os.listdir( ABS_PAT + '/raw')):
+    if fn == '.DS_Store':
+        continue
+
     print(fn)
-    image = cv2.imread('raw/' + fn)
+    image = cv2.imread( ABS_PAT + '/raw/' + fn)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     faces = faceCascade.detectMultiScale(gray,5, 5)
