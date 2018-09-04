@@ -39,6 +39,13 @@ def main():
     gpu_number = args.gpu_number
     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu_number
 
+    # a fix to absolute path from relative path 
+    print(args.data_dir)
+    ABS_PAT = os.path.dirname(os.path.realpath(__file__)) + '/'
+    args.data_dir = ABS_PAT + 'Data'
+    print(args.data_dir)
+
+
     with tf.device('/gpu:{0}'.format(gpu_number)):
         gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.90)
         config = tf.ConfigProto(allow_soft_placement=True, gpu_options=gpu_options)

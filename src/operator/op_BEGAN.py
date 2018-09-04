@@ -70,11 +70,15 @@ class Operator(op_base):
         # load data
         data_path = '{0}/{1}/{2}_{3}'.format(self.data_dir, self.dataset, self.data_size, self.data_opt)
 
+
+        print('data_path ' + data_path)
         if os.path.exists(data_path + '.npy'):
             data = np.load(data_path + '.npy')
         else:
             data = sorted(glob.glob(os.path.join(data_path, "*.*")))
             np.save(data_path + '.npy', data)
+
+        print(data)
 
         print('Shuffle ....')
         random_order = np.random.permutation(len(data))
@@ -88,7 +92,9 @@ class Operator(op_base):
         self.count = 0
 
         for epoch in range(self.niter):
+            print('epoch ' + str(epoch))
             batch_idxs = len(data) // self.batch_size
+            print('batch_idxs ' + str(batch_idxs))
 
             for idx in range(0, batch_idxs):
                 self.count += 1
